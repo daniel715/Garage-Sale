@@ -1,17 +1,20 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "../layouts/SignInLayout.vue";
 
 Vue.use(Router);
 
 const routes = [
   {
     path: "/",
+    redirect: "/home"
+  },
+  {
+    path: "/home",
     name: "home",
     component: () =>
       import("@/layouts/DefaultLayout.vue"),
     meta: {
-      requiresAuth: true
+      layout: "default"
     }
   },
   {
@@ -20,7 +23,7 @@ const routes = [
     component: () =>
       import("@/layouts/SignInLayout.vue"),
     meta: {
-      requiresAuth: true
+      layout: "signin"
     }
   },
 ];
