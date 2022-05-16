@@ -1,8 +1,13 @@
 <template>
-  <div id="app">
-      <!-- <h1>App Component</h1> -->
-    <component :is="currentLayout" />
-  </div>
+  <v-app>
+    <v-main>
+      <div id="app">
+        <!-- <h1>App Component</h1> -->
+        <component :is="currentLayout" />
+        <!-- <router-view></router-view> -->
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -11,7 +16,7 @@ import signinLayout from "@/layouts/SignInLayout.vue";
 export default {
   components: {
     defaultLayout,
-    signinLayout
+    signinLayout,
   },
   computed: {
     currentLayout() {

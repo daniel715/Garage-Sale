@@ -1,24 +1,51 @@
 <template>
-<!-- <div class="container h-screen flex items-center"></div> -->
-  <div class="h-screen flex items-center">
-    <div class="card p-10 border-2 w-80 m-auto mt-56">
-      <img src="../assets/garage-sale-logo.jpeg" alt="logo" />
-      <base-input type="email" class="mt-10" label="Email" />
-      <password-input  class="mt-8" label="Contraseña" />
-      <button class="bg-blue-400 hover:bg-blue-500 text-white w-full rounded mt-6 h-10" >Iniciar Sesion</button>
-    </div>
+  <div class="container">
+    <img width="250px" src="../assets/garage-sale-logo.jpeg" alt="logo" />
+    <base-input
+      class="mx-auto"
+      v-model="email"
+      type="email"
+      cols="3"
+      label="Email"
+    />
+    <password-input
+      class="mx-auto"
+      v-model="password"
+      cols="3"
+      label="Contraseña"
+    />
+    <v-btn @click="signIn" color="success" elevation="5">Iniciar Sesion</v-btn>
   </div>
 </template>
 <script>
 import baseInput from "@/components/commons/inputs/BaseInput.vue";
 import passwordInput from "@/components/commons/inputs/PasswordInput.vue";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export default {
   components: {
     baseInput,
     passwordInput,
   },
-  created() {
-    console.log("en signinlayput");
+  data: () => ({
+    email: "",
+    password: "",
+  }),
+  methods: {
+    signIn() {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+        .then((userCredential) => {
+          // Signed In
+          const user = userCredential.user;
+          console.log("user", user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("error en la autenticacion", errorMessage);
+        });
+    },
   },
+  created() {},
 };
 </script>
